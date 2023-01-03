@@ -9,7 +9,7 @@ TODO:
  - Styles
  - Tests
  - Add to github + vercel
- - 
+ - Read from JSON file
 
 Maybe: 
  - Persist state (zustand)
