@@ -58,7 +58,7 @@ export default function Home() {
 			<Waitlist list={showServiced ? servicedList : appoitments} />
 			{
 				results.length > 0 
-				? results.map(result => <p>{result.puppyName}</p>)
+				? results.map(result => <p key={result.id}>{result.puppyName}</p>)
 				: null
 			}
 		</main>
