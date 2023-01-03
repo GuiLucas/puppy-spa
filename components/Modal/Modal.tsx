@@ -40,7 +40,7 @@ export function Modal(props: ModalProps): React.ReactElement {
 	}
 
 	const errorStyle = {
-		color: 'red', fontSize:'0.7rem', textAlign: 'right', marginBottom: '8px'
+		color: 'red', fontSize:'0.7rem', marginBottom: '8px'
 	}
 
 	return <Dialog.Root open={open} onOpenChange={setOpen}>
