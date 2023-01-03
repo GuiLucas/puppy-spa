@@ -20,16 +20,17 @@ export default function Home() {
 		[appoitments]
 	)
 
-	const debouncedSearch = useDebounce(searchValue, 200)
+	const debouncedSearch = useDebounce(searchValue, 500)
+
+	const fuse = new Fuse<Appoitment>(appoitments, { keys: ['puppyName', 'owner', 'requestedService'] })
+	const results = fuse.search(debouncedSearch)
+	const searchResults = results.flatMap(result => result.item)
+
+	const appoitmentsToDisplay = searchValue ? searchResults : appoitments
 
 	function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
 		setSearchValue(e.target.value)
 	}
-
-	const fuse = new Fuse<Appoitment>(appoitments, { keys: ['puppyName', 'owner', 'requestedService'] })
-
-	const searchResult = fuse.search(debouncedSearch)
-	const results = searchResult.flatMap(result => result.item)
 
 	return <>
 		<Head>
@@ -39,8 +40,8 @@ export default function Home() {
 			<link rel="icon" href="/favicon.ico" />
 		</Head>
 		<main className={styles.main}>
-			<h1>Puppy Spa 🐶</h1>
-			<div style={{display:'flex', gap:'16px', marginTop: '16px'}}>
+			<h1 className={styles.title}>Puppy Spa 🐶</h1>
+			<div className={styles.actions}>
 				<Modal />
 				<Button
 					label='Show Serviced'
@@ -54,13 +55,7 @@ export default function Home() {
 					onChange={handleSearch}
 				/>
 			</div>
-			<br />
-			<Waitlist list={showServiced ? servicedList : appoitments} />
-			{
-				results.length > 0 
-				? results.map(result => <p key={result.id}>{result.puppyName}</p>)
-				: null
-			}
+			<Waitlist list={showServiced ? servicedList : appoitmentsToDisplay} />
 		</main>
 	</>
 }

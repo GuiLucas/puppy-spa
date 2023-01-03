@@ -1,5 +1,5 @@
 import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons'
-import { Appoitment } from "../../types" 
+import { Appoitment } from "../../types"
 import { useAppoitmentsActions } from "../../store"
 import { makeReadableDate } from "../../lib"
 import styles from './Waitlist.module.css'
@@ -12,29 +12,29 @@ function Card(props: CardProps) {
     const { appoitment } = props
 
     const {
-        deleteAppoitment, 
+        deleteAppoitment,
         toggleServiced
     } = useAppoitmentsActions()
 
     const arrivalDate = makeReadableDate(new Date(appoitment.arrival))
 
     return <section className={styles.Card}>
-            <div className={styles.CardSection}>
-                <h2>{appoitment.puppyName}</h2>
-                <div style={{ display: 'inherit', gap: '4px'}}>
-                    <div title="Mark as Serviced">
-                        <CheckCircledIcon 
-                            color={appoitment.serviced ? 'green' : undefined} 
-                            onClick={() => toggleServiced(appoitment.id)} 
-                        />
-                    </div>
-                    <div title='Delete Entry'>
-                        <CrossCircledIcon
-                            color='red'
-                            onClick={() => deleteAppoitment(appoitment)}
-                        />
-                    </div>
+        <div className={styles.CardSection}>
+            <h2>{appoitment.puppyName}</h2>
+            <div style={{ display: 'inherit', gap: '4px' }}>
+                <div title="Mark as Serviced">
+                    <CheckCircledIcon
+                        color={appoitment.serviced ? 'green' : undefined}
+                        onClick={() => toggleServiced(appoitment.id)}
+                    />
                 </div>
+                <div title='Delete Entry'>
+                    <CrossCircledIcon
+                        color='var(--tomato10)'
+                        onClick={() => deleteAppoitment(appoitment)}
+                    />
+                </div>
+            </div>
         </div>
         <div className={styles.CardSection}>
             <p><em>{appoitment.requestedService}</em></p>
@@ -43,7 +43,7 @@ function Card(props: CardProps) {
         <div className={styles.CardFooter} >
             <p>{arrivalDate}</p>
 
-        </div>        
+        </div>
     </section>
 }
 
@@ -57,7 +57,7 @@ export function Waitlist(props: WaitlistProps) {
     return <div>
         {
             list.map(
-                appoitment => <Card key={appoitment.id} appoitment={appoitment}/>
+                appoitment => <Card key={appoitment.id} appoitment={appoitment} />
             )
         }
     </div>

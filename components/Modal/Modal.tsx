@@ -11,7 +11,7 @@ import { Button, IconButton } from '../Button';
 
 const wait = () => new Promise((resolve) => setTimeout(resolve, 100));
 
-type ModalProps = {} 
+type ModalProps = {}
 
 export function Modal(props: ModalProps): React.ReactElement {
 	const [open, setOpen] = useState(false);
@@ -39,10 +39,6 @@ export function Modal(props: ModalProps): React.ReactElement {
 		});
 	}
 
-	const errorStyle = {
-		color: 'red', fontSize:'0.7rem', marginBottom: '8px'
-	}
-
 	return <Dialog.Root open={open} onOpenChange={setOpen}>
 		<Dialog.Trigger asChild>
 			<div>
@@ -54,45 +50,59 @@ export function Modal(props: ModalProps): React.ReactElement {
 			<Dialog.Content className={styles.DialogContent}>
 				<Dialog.Title className={styles.DialogTitle}>Create new Appoitment</Dialog.Title>
 				<form onSubmit={handleSubmit(onSubmit)} id='create-new'>
-					{errors.puppyName?.type === 'required' 
-					&& <p role="alert" style={errorStyle}>Puppy name is required</p>}
+					<div className={styles.FormError}>
+						{
+							errors.puppyName?.type === 'required'
+							&& <p role="alert">Puppy name is required</p>
+						}
+					</div>
 					<fieldset className={styles.Fieldset}>
 						<label className={styles.Label} htmlFor="name">
 							Puppy Name
 						</label>
-						<input 
-							className={styles.Input} 
-							id="name" 
-							aria-invalid={errors.puppyName ? "true" : "false"} 
-							{...register('puppyName', {required: true})}
+						<input
+							className={styles.Input}
+							id="name"
+							aria-invalid={errors.puppyName ? "true" : "false"}
+							{...register('puppyName', { required: true })}
 						/>
 					</fieldset>
-					{errors.requestedService?.type === 'required' && <p style={errorStyle} role="alert">Treatment is required</p>}
+					<div className={styles.FormError}>
+						{
+							errors.requestedService?.type === 'required'
+							&& <p role="alert">Treatment is required</p>
+						}
+					</div>
 					<fieldset className={styles.Fieldset}>
 						<label className={styles.Label} htmlFor="requestedService">
 							Treatment
 						</label>
-						<input 
-							className={styles.Input} 
-							id="requestedService" 
-							aria-invalid={errors.requestedService ? "true" : "false"} 
-							{...register('requestedService', {required: true})}
+						<input
+							className={styles.Input}
+							id="requestedService"
+							aria-invalid={errors.requestedService ? "true" : "false"}
+							{...register('requestedService', { required: true })}
 						/>
 					</fieldset>
-					<p role="alert" style={errorStyle}>{errors.owner?.type === 'required' && `Owner name is required`}</p>
+					<div className={styles.FormError}>
+						{
+							errors.owner?.type === 'required'
+							&& <p role="alert">Owner name is required</p>
+						}
+					</div>
 					<fieldset className={styles.Fieldset}>
 						<label className={styles.Label} htmlFor="owner">
 							Owner Name
 						</label>
-						<input 
-							className={styles.Input} 
-							id="owner" 
-							aria-invalid={errors.owner ? "true" : "false"} 
-							{...register('owner', {required: true})}
+						<input
+							className={styles.Input}
+							id="owner"
+							aria-invalid={errors.owner ? "true" : "false"}
+							{...register('owner', { required: true })}
 						/>
 					</fieldset>
 					<div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
-						<Button label={'Save Changes'} type='submit' variant={'success'}/>
+						<Button label={'Save Changes'} type='submit' variant={'success'} />
 					</div>
 				</form>
 				<Dialog.Close asChild>
@@ -101,7 +111,7 @@ export function Modal(props: ModalProps): React.ReactElement {
 							<Cross2Icon />
 						</IconButton>
 					</div>
-       			</Dialog.Close>
+				</Dialog.Close>
 			</Dialog.Content>
 		</Dialog.Portal>
 	</Dialog.Root>

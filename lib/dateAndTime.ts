@@ -2,7 +2,7 @@ import { format } from "date-fns"
 
 export function makeReadableDate(
 	date: Date,
-    customFormat: string = 'h:mm dd/MM/yyyy',
+    customFormat: string = 'H:mm dd/MM/yyyy',
 ): string {
 	return format(date, customFormat)
 }
