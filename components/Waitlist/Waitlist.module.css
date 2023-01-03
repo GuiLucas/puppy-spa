@@ -1,0 +1,19 @@
+.Card {
+    padding: 1rem; 
+    border-radius: 8px; 
+    margin-bottom: 8px; 
+    min-width: 300px; 
+    background-color: white;
+}
+
+.CardSection {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+}
+
+.CardFooter {
+    /* margin-top: 8px; */
+    text-align: right;
+    font-size: 0.7rem;
+}

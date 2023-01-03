@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react"
-import { Appoitment } from "../../types"
-import { CheckCircledIcon } from '@radix-ui/react-icons'
-import { useAppoitments, useAppoitmentsActions } from "../../store"
-import { makeReadableDate, orderAppoitments, orderAppoitmentsByDate } from "../../lib"
+import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons'
+import { Appoitment } from "../../types" 
+import { useAppoitmentsActions } from "../../store"
+import { makeReadableDate } from "../../lib"
+import styles from './Waitlist.module.css'
 
 type CardProps = {
     appoitment: Appoitment
@@ -18,22 +18,31 @@ function Card(props: CardProps) {
 
     const arrivalDate = makeReadableDate(new Date(appoitment.arrival))
 
-    return <section style={{border: '1px solid white', padding: '1rem', borderRadius: '8px', marginBottom: '8px', minWidth: '300px', backgroundColor: 'white'}}>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-            <h2>{appoitment.puppyName}</h2>
-            <div title="Mark as Serviced">
-                <CheckCircledIcon 
-                    color={appoitment.serviced ? 'green' : 'red'} 
-                    onClick={() => toggleServiced(appoitment.id)} 
-                />
-            </div>
+    return <section className={styles.Card}>
+            <div className={styles.CardSection}>
+                <h2>{appoitment.puppyName}</h2>
+                <div style={{ display: 'inherit', gap: '4px'}}>
+                    <div title="Mark as Serviced">
+                        <CheckCircledIcon 
+                            color={appoitment.serviced ? 'green' : undefined} 
+                            onClick={() => toggleServiced(appoitment.id)} 
+                        />
+                    </div>
+                    <div title='Delete Entry'>
+                        <CrossCircledIcon
+                            color='red'
+                            onClick={() => deleteAppoitment(appoitment)}
+                        />
+                    </div>
+                </div>
         </div>
-        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+        <div className={styles.CardSection}>
             <p><em>{appoitment.requestedService}</em></p>
             <p>{appoitment.owner}</p>
         </div>
-        <div style={{textAlign: 'right'}} onClick={() => deleteAppoitment(appoitment)}>
-            <p style={{fontSize: '0.7rem'}}>{arrivalDate}</p>
+        <div className={styles.CardFooter} >
+            <p>{arrivalDate}</p>
+
         </div>        
     </section>
 }
