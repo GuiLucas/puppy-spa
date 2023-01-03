@@ -1,0 +1,59 @@
+.Button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 0 15px;
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 500;
+    height: 35px;
+  }
+
+  .Button.neutral {
+    background-color: white;
+    color: var(--violet11);
+    box-shadow: 0 2px 10px var(--blackA7);
+  }
+
+  .Button.neutral:hover {
+    background-color: var(--mauve3);
+  }
+
+  .Button.neutral:focus {
+    box-shadow: 0 0 0 2px black;
+  }
+
+  .Button.success {
+    background-color: var(--green4);
+    color: var(--green11);
+  }
+
+  .Button.success:hover {
+    background-color: var(--green5);
+  }
+
+  .Button.success:focus {
+    box-shadow: 0 0 0 2px var(--green7);
+  }
+
+  .IconButton {
+    font-family: inherit;
+    border-radius: 100%;
+    height: 25px;
+    width: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--violet11);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .IconButton:hover {
+    background-color: var(--violet4);
+  }
+  .IconButton:focus {
+    box-shadow: 0 0 0 2px var(--violet7);
+  }
