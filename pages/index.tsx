@@ -2,16 +2,18 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { Button, Modal, TextField, Waitlist } from '../components'
 import { useMemo, useState } from 'react'
-import { useAppoitments } from '../store'
+import { useAppoitments, useAppoitmentsActions } from '../store'
 import { Appoitment } from '../types'
 import useDebounce from '../hooks/useDebounce'
 import Fuse from 'fuse.js'
 
 export default function Home() {
 	const [showServiced, setShowServiced] = useState<boolean>(false)
+	const [isOrderedByDate, setIsOrderedByDate] = useState<boolean>(false)
 	const [searchValue, setSearchValue] = useState<string>('')
 
 	const appoitments = useAppoitments()
+	const { orderByDate, orderById } = useAppoitmentsActions()
 
 	const servicedList: Appoitment[] = useMemo(
 		() => appoitments.filter(
@@ -32,6 +34,18 @@ export default function Home() {
 		setSearchValue(e.target.value)
 	}
 
+	function handleChangeOrder() {
+		if(isOrderedByDate) {
+			orderById()
+		} else {
+			orderByDate()
+		}
+
+		setIsOrderedByDate(!isOrderedByDate)
+	}
+
+	const changeOrderLabel = isOrderedByDate ? 'Order by Date' : 'Order by Id'
+
 	return <>
 		<Head>
 			<title>Puppy Spa</title>
@@ -47,6 +61,10 @@ export default function Home() {
 					label='Show Serviced'
 					disabled={ servicedList.length === 0 }
 					onClick={() => setShowServiced(!showServiced)}
+				/>
+				<Button
+					label={changeOrderLabel}
+					onClick={handleChangeOrder}
 				/>
 				<TextField 
 					name="search-field" 

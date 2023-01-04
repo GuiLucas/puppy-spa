@@ -154,7 +154,7 @@ export function toggleServiced(list: Appoitment[], appoitmentId: string): Appoit
     )
 }
 
-export function orderAppoitments(list: Appoitment[]): Appoitment[] {
+export function orderAppoitmentsById(list: Appoitment[]): Appoitment[] {
     let newOrder: Appoitment[] = []
     const head = findHead(list)
     
@@ -171,7 +171,8 @@ export function orderAppoitments(list: Appoitment[]): Appoitment[] {
 }
 
 export function orderAppoitmentsByDate(list: Appoitment[]): Appoitment[] {
-    return list.sort(
+    const newList = [...list]
+    return newList.sort(
         (a, b) => sortDate(new Date(a.arrival), new Date(b.arrival))
     )
 }

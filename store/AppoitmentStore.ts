@@ -3,7 +3,7 @@ import { Appoitment, MOCK_LIST } from '../types'
 import { 
     addAppoitment, 
     deleteAppoitment, 
-    orderAppoitments, 
+    orderAppoitmentsById, 
     orderAppoitmentsByDate, 
     toggleServiced 
 } from '../lib'
@@ -17,13 +17,15 @@ type AppoitmentActions = {
         addAppoitment: (appoitment: Appoitment) => void
         deleteAppoitment: (appoitment: Appoitment) => void
         toggleServiced: (appoitmentId: string) => void
+        orderByDate: () => void
+        orderById: () => void
     }
 }
 
 type AppoitmentStore = AppoitmentState & AppoitmentActions
 
 const initialState: AppoitmentState = {
-    appoitments: orderAppoitments(MOCK_LIST)
+    appoitments: orderAppoitmentsById(MOCK_LIST)
 }
 
 const useAppoitmentStore = create<AppoitmentStore>()((set, get) => ({
@@ -41,6 +43,14 @@ const useAppoitmentStore = create<AppoitmentStore>()((set, get) => ({
             (appoitmentId) => set({
                     appoitments: toggleServiced(get().appoitments, appoitmentId) 
                 }),
+        orderByDate: 
+            () => set({
+                    appoitments: orderAppoitmentsByDate(get().appoitments) 
+                }),
+        orderById: 
+        () => set({
+                appoitments: orderAppoitmentsById(get().appoitments) 
+            }),
     }
 }))
 
