@@ -2,17 +2,17 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { Button, Modal, TextField, Waitlist } from '../components'
 import { useMemo, useState } from 'react'
-import { useAppoitments, useAppoitmentsActions } from '../store'
+import { useAppoitments, useAppoitmentsActions, useAppoitmentsOrder } from '../store'
 import { Appoitment } from '../types'
 import useDebounce from '../hooks/useDebounce'
 import Fuse from 'fuse.js'
 
 export default function Home() {
 	const [showServiced, setShowServiced] = useState<boolean>(false)
-	const [isOrderedByDate, setIsOrderedByDate] = useState<boolean>(false)
 	const [searchValue, setSearchValue] = useState<string>('')
 
 	const appoitments = useAppoitments()
+	const appoitmentOrder = useAppoitmentsOrder()
 	const { orderByDate, orderById } = useAppoitmentsActions()
 
 	const servicedList: Appoitment[] = useMemo(
@@ -35,16 +35,14 @@ export default function Home() {
 	}
 
 	function handleChangeOrder() {
-		if(isOrderedByDate) {
+		if(appoitmentOrder === 'date') {
 			orderById()
 		} else {
 			orderByDate()
 		}
-
-		setIsOrderedByDate(!isOrderedByDate)
 	}
 
-	const changeOrderLabel = isOrderedByDate ? 'Order by Date' : 'Order by Id'
+	const changeOrderLabel = appoitmentOrder === 'date' ? 'Order by Id' : 'Order by Date'
 
 	return <>
 		<Head>

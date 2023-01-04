@@ -135,8 +135,69 @@ export function swapOrder(
     appoitment: Appoitment, 
     orientation: 'left' | 'right'
 ): Appoitment [] {
+    let newList: Appoitment[] = []
 
+    if(orientation === 'left') {
+        if(isHead(appoitment)) return list
 
+        const prevNode = getAppoitment(appoitment.prevAppoitmentId, list)
+
+        if(prevNode) {
+            const newPrevNode: Appoitment = {
+                ...appoitment, 
+                prevAppoitmentId: prevNode?.prevAppoitmentId,
+                nextAppoitmentId: prevNode?.id
+            }
+    
+            const newNextNode: Appoitment = {
+                ...prevNode, 
+                prevAppoitmentId: appoitment.id, 
+                nextAppoitmentId: appoitment.nextAppoitmentId
+            }
+
+            for(let node of list) {
+                if(node.id === prevNode.id) {
+                    newList.push(newPrevNode)
+                } else if(node.id === appoitment.id) {
+                    newList.push(newNextNode)
+                } else {
+                    newList.push(node)
+                }
+            }
+
+            return newList
+        }
+
+    } else if(orientation === 'right') {
+        if(isTail(appoitment)) return list 
+
+        const nextNode = getAppoitment(appoitment.nextAppoitmentId, list)
+        if(nextNode) {
+            const newNextNode: Appoitment = {
+                ...appoitment,
+                prevAppoitmentId: nextNode.id,
+                nextAppoitmentId: nextNode.nextAppoitmentId
+            }
+
+            const newPrevNode: Appoitment = {
+                ...nextNode, 
+                prevAppoitmentId: appoitment.prevAppoitmentId,
+                nextAppoitmentId: appoitment.id
+            }
+
+            for(let node of list) {
+                if(node.id === appoitment.id) {
+                    newList.push(newPrevNode)
+                } else if(node.id === nextNode.id) {
+                    newList.push(newNextNode)
+                } else {
+                    newList.push(node)
+                }
+            }
+
+            return newList
+        }
+    }
 
     return list
 }
